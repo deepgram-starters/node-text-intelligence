@@ -1,92 +1,76 @@
-> INSTRUCTIONS
+# Text Intelligence Starter App
 
-> 1. If your app requires an UI: Copy the entire contents of https://github.com/deepgram-starters/deepgram-starters-ui to the `./static/` folder.
+Simple Node.js backend for testing Text Intelligence conformance tests.
 
-> 2. The configuration of the `deepgram.toml` file, is required so we can include the starter in future onboarding workflows.
+> THIS APP SHOULD BE REFACTORED BEFORE MAKING PUBLIC. IS DOES NOT MEET OUR STANDARDS.
 
-> 3. Consistent naming of the project repo is important. Please don't deviate from our standards. Example repo name: [language] [use case] 
+## Quick Start
 
-> 4. Use the readme template below, don't deviate from it.
+1. **Install dependencies:**
+   ```bash
+   npm install
+   ```
 
-> 5. Use the [cursor rules](./.cursor/rules) with [Cursor](https://www.cursor.com/) to help build your starter more quickly!
----
+2. **Set up environment:**
+   ```bash
+   cp sample.env .env
+   # Edit .env and add your DEEPGRAM_API_KEY
+   ```
 
-# [Language] [Usecase] Starter
+3. **Start the server:**
+   ```bash
+   npm start
+   # Or for development with auto-reload:
+   npm run dev
+   ```
 
-> Write a brief intro for this project.
+4. **Test it:**
+   ```bash
+   curl -X POST http://localhost:3000/text-intelligence/analyze \
+     -H "Content-Type: application/json" \
+     -d '{"text": "Deepgram is amazing!"}' \
+     -G -d summarize=true
+   ```
 
-## What is Deepgram?
-> Please leave this section unchanged.
-
-[Deepgram’s](https://deepgram.com/) voice AI platform provides APIs for speech-to-text, text-to-speech, and full speech-to-speech voice agents. Over 200,000+ developers use Deepgram to build voice AI products and features.
-
-## Sign-up to Deepgram
-
-> Please leave this section unchanged, unless providing a UTM on the URL.
-
-Before you start, it's essential to generate a Deepgram API key to use in this project. [Sign-up now for Deepgram and create an API key](https://console.deepgram.com/signup?jump=keys).
-
-## Quickstart
-
-> Detail the manual steps to get started.
-
-e.g.
-
-### Manual
-
-Follow these steps to get started with this starter application.
-
-#### Clone the repository
-
-Go to GitHub and [clone the repository](https://github.com/deepgram-starters/prerecorded-node-starter).
-
-#### Install dependencies
-
-Install the project dependencies.
+## Run Conformance Tests
 
 ```bash
-npm install
+cd ../starter-contracts
+BASE_URL=http://localhost:3000 npm run test:text-intelligence
 ```
 
-#### Edit the config file
+## Endpoints
 
-> Config file can be any appropriate file for the framework/language. For e.g.
-> Node is using a config.json file, while Python is only use .env files
+### `POST /text-intelligence/analyze`
 
-Copy the code from `sample.env` and create a new file called `.env`. Paste in the code and enter your API key you generated in the [Deepgram console](https://console.deepgram.com/).
+Analyzes text with optional intelligence features.
 
+**Query Parameters:**
+- `summarize=true` - Generate summary
+- `sentiment=true` - Analyze sentiment
+- `topics=true` - Detect topics
+- `intents=true` - Recognize intents
+
+**Request Body:**
 ```json
-DEEPGRAM_API_KEY=%api_key%
+{
+  "text": "Your text here..."
+}
 ```
 
-#### Run the application
-
-> If your starter has a UI, it must always run on port 8080
-
-The `dev` script will run a web and API server concurrently. Once running, you can [access the application in your browser](http://localhost:8080/).
-
-```bash
-npm start
+Or URL-based:
+```json
+{
+  "url": "https://example.com/article.txt"
+}
 ```
 
-## Issue Reporting
+## Architecture
 
-If you have found a bug or if you have a feature request, please report them at this repository issues section. Please do not report security vulnerabilities on the public GitHub issue tracker. The [Security Policy](./SECURITY.md) details the procedure for contacting Deepgram.
+This starter implements the Text Intelligence interface contract from `starter-contracts`. It:
+- Validates requests using Ajv + JSON schemas
+- Calls Deepgram's Text Intelligence API
+- Transforms responses to match the contract
+- Handles errors with structured error codes
 
-## Getting Help
-
-We love to hear from you so if you have questions, comments or find a bug in the project, let us know! You can either:
-
-> be sure to set the repo-name in the issue URL.
-
-- [Open an issue in this repository](https://github.com/deepgram-starters/{repo-name]/issues/new)
-- [Join the Deepgram Github Discussions Community](https://github.com/orgs/deepgram/discussions)
-- [Join the Deepgram Discord Community](https://discord.gg/xWRaCDBtW4)
-
-## Author
-
-[Deepgram](https://deepgram.com)
-
-## License
-
-This project is licensed under the MIT license. See the [LICENSE](./LICENSE) file for more info.
+Built specifically to validate conformance tests work correctly!

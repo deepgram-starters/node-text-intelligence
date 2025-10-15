@@ -1,17 +1,18 @@
 [meta]
-  title = "<language/framework> <usecase> Starter" # update with usecase and framework
-  description = "Get started using Deepgram's <product> with this <language/framework> demo app" # update with usecase and framework
-  author = "Deepgram DX Team <devrel@deepgram.com> (https://developers.deepgram.com)" # update for author details
-  useCase = "Prerecorded" # usecase 
-  language = "Python" # base language
-  framework = "Flask" # framework if not native
+title = "Node Text Intelligence Starter"
+description = "Get started using Deepgram's Text Intelligence with this Node demo app"
+author = "Deepgram DX Team <devrel@deepgram.com> (https://developers.deepgram.com)"
+useCase = "TextIntel"
+language = "JavaScript"
+framework = "Node"
+sdk = "4.11.2"
 
-[build] # delete if no build/install steps applicable 
-  command = "pip install -r requirements.txt" # automatically install dependencies, delete if not applicable
+[build]
+command = "npm install"
 
 [config]
-  sample = "sample.env" # the example config file
-  output = ".env" # the file that we will generate using their API
+sample = "sample.env"
+output = ".env"
 
 [post-build]
-  message = "Run `flask run -p 8080` to get up and running." # message to give users once setup is complete
+message = "Run `npm start` to start the server."
