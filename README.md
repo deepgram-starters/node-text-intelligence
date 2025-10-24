@@ -1,44 +1,35 @@
-> INSTRUCTIONS
+# Node Text Intelligence Starter
 
-> 1. If your app requires an UI: Copy the entire contents of https://github.com/deepgram-starters/deepgram-starters-ui to the `./static/` folder.
+@TODO: Refactor App to meet Starter Standards
 
-> 2. The configuration of the `deepgram.toml` file, is required so we can include the starter in future onboarding workflows.
-
-> 3. Consistent naming of the project repo is important. Please don't deviate from our standards. Example repo name: [language] [use case] 
-
-> 4. Use the readme template below, don't deviate from it.
-
-> 5. Use the [cursor rules](./.cursor/rules) with [Cursor](https://www.cursor.com/) to help build your starter more quickly!
----
-
-# [Language] [Usecase] Starter
-
-> Write a brief intro for this project.
+Get started using Deepgram's Text Intelligence API with this Node.js starter application. This application demonstrates how to analyze text with features like summarization, sentiment analysis, topic detection, and intent recognition using Deepgram's Text Intelligence API.
 
 ## What is Deepgram?
-> Please leave this section unchanged.
 
-[Deepgram’s](https://deepgram.com/) voice AI platform provides APIs for speech-to-text, text-to-speech, and full speech-to-speech voice agents. Over 200,000+ developers use Deepgram to build voice AI products and features.
+[Deepgram's](https://deepgram.com/) voice AI platform provides APIs for speech-to-text, text-to-speech, and full speech-to-speech voice agents. Over 200,000+ developers use Deepgram to build voice AI products and features.
 
 ## Sign-up to Deepgram
 
-> Please leave this section unchanged, unless providing a UTM on the URL.
-
 Before you start, it's essential to generate a Deepgram API key to use in this project. [Sign-up now for Deepgram and create an API key](https://console.deepgram.com/signup?jump=keys).
 
+## Prerequisites
+
+- Node.js 18 or higher
+- npm or yarn for package installation
+- A [Deepgram API Key](https://console.deepgram.com/signup?jump=keys)
+
 ## Quickstart
-
-> Detail the manual steps to get started.
-
-e.g.
-
-### Manual
 
 Follow these steps to get started with this starter application.
 
 #### Clone the repository
 
-Go to GitHub and [clone the repository](https://github.com/deepgram-starters/prerecorded-node-starter).
+Go to GitHub and clone the repository.
+
+```bash
+git clone https://github.com/deepgram-starters/node-text-intelligence.git
+cd node-text-intelligence
+```
 
 #### Install dependencies
 
@@ -50,43 +41,52 @@ npm install
 
 #### Edit the config file
 
-> Config file can be any appropriate file for the framework/language. For e.g.
-> Node is using a config.json file, while Python is only use .env files
-
 Copy the code from `sample.env` and create a new file called `.env`. Paste in the code and enter your API key you generated in the [Deepgram console](https://console.deepgram.com/).
 
-```json
-DEEPGRAM_API_KEY=%api_key%
+```bash
+DEEPGRAM_API_KEY=your_api_key_here
 ```
 
 #### Run the application
 
-> If your starter has a UI, it must always run on port 8080
-
-The `dev` script will run a web and API server concurrently. Once running, you can [access the application in your browser](http://localhost:8080/).
+Start the server:
 
 ```bash
 npm start
 ```
 
-## Issue Reporting
+Or for development with auto-reload:
 
-If you have found a bug or if you have a feature request, please report them at this repository issues section. Please do not report security vulnerabilities on the public GitHub issue tracker. The [Security Policy](./SECURITY.md) details the procedure for contacting Deepgram.
+```bash
+npm run dev
+```
+
+The server will start on `http://localhost:3000`.
 
 ## Getting Help
 
 We love to hear from you so if you have questions, comments or find a bug in the project, let us know! You can either:
 
-> be sure to set the repo-name in the issue URL.
-
-- [Open an issue in this repository](https://github.com/deepgram-starters/{repo-name]/issues/new)
+- [Open an issue in this repository](https://github.com/deepgram-starters/node-text-intelligence/issues/new)
 - [Join the Deepgram Github Discussions Community](https://github.com/orgs/deepgram/discussions)
 - [Join the Deepgram Discord Community](https://discord.gg/xWRaCDBtW4)
 
-## Author
+## Contributing
 
-[Deepgram](https://deepgram.com)
+See our [Contributing Guidelines](./CONTRIBUTING.md) to learn about contributing to this project.
+
+## Code of Conduct
+
+This project follows the [Deepgram Code of Conduct](./CODE_OF_CONDUCT.md).
+
+## Security
+
+For security policy and procedures, see our [Security Policy](./SECURITY.md).
 
 ## License
 
 This project is licensed under the MIT license. See the [LICENSE](./LICENSE) file for more info.
+
+## Author
+
+[Deepgram](https://deepgram.com)
