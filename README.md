@@ -1,76 +1,92 @@
-# Text Intelligence Starter App
+# Node Text Intelligence Starter
 
-Simple Node.js backend for testing Text Intelligence conformance tests.
+@TODO: Refactor App to meet Starter Standards
 
-> THIS APP SHOULD BE REFACTORED BEFORE MAKING PUBLIC. IS DOES NOT MEET OUR STANDARDS.
+Get started using Deepgram's Text Intelligence API with this Node.js starter application. This application demonstrates how to analyze text with features like summarization, sentiment analysis, topic detection, and intent recognition using Deepgram's Text Intelligence API.
 
-## Quick Start
+## What is Deepgram?
 
-1. **Install dependencies:**
-   ```bash
-   npm install
-   ```
+[Deepgram's](https://deepgram.com/) voice AI platform provides APIs for speech-to-text, text-to-speech, and full speech-to-speech voice agents. Over 200,000+ developers use Deepgram to build voice AI products and features.
 
-2. **Set up environment:**
-   ```bash
-   cp sample.env .env
-   # Edit .env and add your DEEPGRAM_API_KEY
-   ```
+## Sign-up to Deepgram
 
-3. **Start the server:**
-   ```bash
-   npm start
-   # Or for development with auto-reload:
-   npm run dev
-   ```
+Before you start, it's essential to generate a Deepgram API key to use in this project. [Sign-up now for Deepgram and create an API key](https://console.deepgram.com/signup?jump=keys).
 
-4. **Test it:**
-   ```bash
-   curl -X POST http://localhost:3000/text-intelligence/analyze \
-     -H "Content-Type: application/json" \
-     -d '{"text": "Deepgram is amazing!"}' \
-     -G -d summarize=true
-   ```
+## Prerequisites
 
-## Run Conformance Tests
+- Node.js 18 or higher
+- npm or yarn for package installation
+- A [Deepgram API Key](https://console.deepgram.com/signup?jump=keys)
+
+## Quickstart
+
+Follow these steps to get started with this starter application.
+
+#### Clone the repository
+
+Go to GitHub and clone the repository.
 
 ```bash
-cd ../starter-contracts
-BASE_URL=http://localhost:3000 npm run test:text-intelligence
+git clone https://github.com/deepgram-starters/node-text-intelligence.git
+cd node-text-intelligence
 ```
 
-## Endpoints
+#### Install dependencies
 
-### `POST /text-intelligence/analyze`
+Install the project dependencies.
 
-Analyzes text with optional intelligence features.
-
-**Query Parameters:**
-- `summarize=true` - Generate summary
-- `sentiment=true` - Analyze sentiment
-- `topics=true` - Detect topics
-- `intents=true` - Recognize intents
-
-**Request Body:**
-```json
-{
-  "text": "Your text here..."
-}
+```bash
+npm install
 ```
 
-Or URL-based:
-```json
-{
-  "url": "https://example.com/article.txt"
-}
+#### Edit the config file
+
+Copy the code from `sample.env` and create a new file called `.env`. Paste in the code and enter your API key you generated in the [Deepgram console](https://console.deepgram.com/).
+
+```bash
+DEEPGRAM_API_KEY=your_api_key_here
 ```
 
-## Architecture
+#### Run the application
 
-This starter implements the Text Intelligence interface contract from `starter-contracts`. It:
-- Validates requests using Ajv + JSON schemas
-- Calls Deepgram's Text Intelligence API
-- Transforms responses to match the contract
-- Handles errors with structured error codes
+Start the server:
 
-Built specifically to validate conformance tests work correctly!
+```bash
+npm start
+```
+
+Or for development with auto-reload:
+
+```bash
+npm run dev
+```
+
+The server will start on `http://localhost:3000`.
+
+## Getting Help
+
+We love to hear from you so if you have questions, comments or find a bug in the project, let us know! You can either:
+
+- [Open an issue in this repository](https://github.com/deepgram-starters/node-text-intelligence/issues/new)
+- [Join the Deepgram Github Discussions Community](https://github.com/orgs/deepgram/discussions)
+- [Join the Deepgram Discord Community](https://discord.gg/xWRaCDBtW4)
+
+## Contributing
+
+See our [Contributing Guidelines](./CONTRIBUTING.md) to learn about contributing to this project.
+
+## Code of Conduct
+
+This project follows the [Deepgram Code of Conduct](./CODE_OF_CONDUCT.md).
+
+## Security
+
+For security policy and procedures, see our [Security Policy](./SECURITY.md).
+
+## License
+
+This project is licensed under the MIT license. See the [LICENSE](./LICENSE) file for more info.
+
+## Author
+
+[Deepgram](https://deepgram.com)
