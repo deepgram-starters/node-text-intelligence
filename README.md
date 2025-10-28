@@ -1,6 +1,6 @@
 # Node Text Intelligence Starter
 
-@TODO: Refactor App to meet Starter Standards
+> @TODO: Refactor App to meet Starter Standards
 
 Get started using Deepgram's Text Intelligence API with this Node.js starter application. This application demonstrates how to analyze text with features like summarization, sentiment analysis, topic detection, and intent recognition using Deepgram's Text Intelligence API.
 
