@@ -1,0 +1,5 @@
+This is a sample text file used for testing the text-intelligence starter contract.
+
+This file SHOULD NOT BE DELETED!
+
+Deepgram's Text intelligence API can extract insights from written content. It can perform tasks like summarization, sentiment analysis, topic detection, and intent recognition. These capabilities are useful for a wide range of applications including customer service, content moderation, and business intelligence.

@@ -1,18 +1,22 @@
 import express from 'express';
 import { createClient } from '@deepgram/sdk';
 import dotenv from 'dotenv';
+import multer from 'multer';
 
 dotenv.config();
 
 const app = express();
-app.use(express.json());
+
+// Configure Multer for multipart/form-data (stores in memory)
+const storage = multer.memoryStorage();
+const upload = multer({ storage: storage });
 
 // Initialize Deepgram client
 const deepgram = createClient(process.env.DEEPGRAM_API_KEY || '');
 
 // Text Intelligence Interface Compliant Endpoint (implements minimal starter-contracts specification)
-// Minimal text-based approach: accepts JSON with text
-app.post('/text-intelligence/analyze', async (req, res) => {
+// Accepts multipart/form-data with either text or url
+app.post('/text-intelligence/analyze', upload.none(), async (req, res) => {
   try {
     // Echo X-Request-Id header if provided
     const requestId = req.headers['x-request-id'];
@@ -20,27 +24,74 @@ app.post('/text-intelligence/analyze', async (req, res) => {
       res.setHeader('X-Request-Id', requestId);
     }
 
-    // Validate request body exists and has text
-    if (!req.body || !req.body.text) {
+    // Extract text or url from multipart form data
+    const { text, url } = req.body;
+
+    // Validate that either text or url is provided (but not neither)
+    if (!text && !url) {
       return res.status(400).json({
         error: {
           type: "validation_error",
           code: "INVALID_TEXT",
-          message: "Request body must contain 'text' field",
+          message: "Request must contain either 'text' or 'url' field",
           details: {}
         }
       });
     }
 
-    const { text } = req.body;
+    // Get the text content (either directly or from URL)
+    let textContent;
+
+    if (url) {
+      // Validate URL format
+      try {
+        new URL(url);
+      } catch (e) {
+        return res.status(400).json({
+          error: {
+            type: "validation_error",
+            code: "INVALID_URL",
+            message: "Invalid URL format",
+            details: {}
+          }
+        });
+      }
+
+      // Fetch text from URL
+      try {
+        const response = await fetch(url);
+        if (!response.ok) {
+          return res.status(400).json({
+            error: {
+              type: "validation_error",
+              code: "INVALID_URL",
+              message: `Failed to fetch URL: ${response.statusText}`,
+              details: {}
+            }
+          });
+        }
+        textContent = await response.text();
+      } catch (e) {
+        return res.status(400).json({
+          error: {
+            type: "validation_error",
+            code: "INVALID_URL",
+            message: `Failed to fetch URL: ${e.message}`,
+            details: {}
+          }
+        });
+      }
+    } else {
+      textContent = text;
+    }
 
     // Check for empty text
-    if (!text || text.trim().length === 0) {
+    if (!textContent || textContent.trim().length === 0) {
       return res.status(400).json({
         error: {
           type: "validation_error",
           code: "EMPTY_TEXT",
-          message: "Text field cannot be empty",
+          message: "Text content cannot be empty",
           details: {}
         }
       });
@@ -62,7 +113,7 @@ app.post('/text-intelligence/analyze', async (req, res) => {
     }
 
     // Call Deepgram API (SDK v4 returns { result, error })
-    const { result, error } = await deepgram.read.analyzeText({ text }, options);
+    const { result, error } = await deepgram.read.analyzeText({ text: textContent }, options);
 
     // Handle SDK errors
     if (error) {
