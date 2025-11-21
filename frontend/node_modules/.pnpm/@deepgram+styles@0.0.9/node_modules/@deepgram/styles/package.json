@@ -1,0 +1,60 @@
+{
+  "name": "@deepgram/styles",
+  "version": "0.0.9",
+  "description": "Tailwind-based design system and styles library for Deepgram design system and demos",
+  "author": "Deepgram",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/deepgram/starter-uis.git",
+    "directory": "libs/styles"
+  },
+  "keywords": [
+    "deepgram",
+    "design-system",
+    "styles",
+    "css",
+    "tailwind",
+    "tailwindcss",
+    "ui-components",
+    "frontend"
+  ],
+  "main": "dist/deepgram.css",
+  "style": "dist/deepgram.css",
+  "files": [
+    "dist/",
+    "lib/",
+    "tailwind.config.js",
+    "postcss.config.js",
+    "README.md",
+    "LICENSE"
+  ],
+  "exports": {
+    ".": {
+      "default": "./dist/deepgram.css"
+    },
+    "./dist/deepgram.css": {
+      "default": "./dist/deepgram.css"
+    },
+    "./expanded": {
+      "default": "./dist/deepgram.expanded.css"
+    },
+    "./source": {
+      "default": "./lib/deepgram.css"
+    },
+    "./tailwind-config": {
+      "default": "./tailwind.config.js"
+    }
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "peerDependencies": {
+    "tailwindcss": "^3.4.0"
+  },
+  "peerDependenciesMeta": {
+    "tailwindcss": {
+      "optional": true
+    }
+  }
+}

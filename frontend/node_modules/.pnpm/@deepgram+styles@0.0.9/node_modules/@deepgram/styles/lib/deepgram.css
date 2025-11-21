@@ -1,0 +1,1455 @@
+/**
+ * Deepgram Styles - Tailwind-based Design System
+ *
+ * A comprehensive, mobile-first CSS framework for consistent Deepgram starter UIs
+ * Built with Tailwind CSS utility classes and custom @apply directives
+ *
+ * Features:
+ * - Semantic color tokens via Tailwind theme
+ * - Mobile-first responsive components
+ * - BEM methodology with Tailwind utilities
+ * - Consistent spacing and typography
+ *
+ * @version 3.0.0 - Tailwind Migration
+ * @author Deepgram Starter UIs Team
+ */
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ==========================================================================
+   COMPONENTS LAYER - Reusable UI Components
+   Base styles (html, body, headings, etc.) are defined in tailwind.config.js
+   ========================================================================== */
+
+@layer components {
+  /* Button Base Styles */
+  .dg-btn {
+    @apply inline-flex items-center justify-center;
+    @apply px-5 py-1.5 leading-[2];
+    @apply font-dg-sans font-semibold text-base;
+    @apply rounded capitalize whitespace-nowrap;
+    @apply cursor-pointer select-none;
+    @apply outline-none w-fit;
+    @apply disabled:opacity-50 disabled:cursor-not-allowed;
+    gap: 0.5rem;
+    height: 3rem;
+  }
+
+  /* Button Modifier: Small */
+  .dg-btn--sm {
+    @apply px-5 py-2;
+    @apply font-bold text-sm;
+    height: 2.25rem;
+  }
+
+  /* Button Modifier: Primary - Gradient border with glow effect */
+  .dg-btn--primary {
+    @apply border border-transparent relative dg-text-white;
+    @apply dg-gradient-border dg-glow-cyan-green;
+  }
+
+  .dg-btn--primary:hover {
+    @apply border-transparent text-black;
+    @apply dg-bg-reset bg-white dg-shadow-subtle;
+  }
+
+  /* Button Modifier: Secondary - White background with black text */
+  .dg-btn--secondary {
+    @apply border border-transparent bg-white text-black;
+  }
+
+  .dg-btn--secondary:hover {
+    @apply border border-white bg-black dg-text-white;
+  }
+
+  /* Button Modifier: Ghost - Transparent with grey border */
+  .dg-btn--ghost {
+    @apply border border-dg-slate bg-transparent dg-text-white;
+  }
+
+  .dg-btn--ghost:hover {
+    @apply border-transparent text-black;
+    @apply dg-bg-reset bg-white dg-shadow-subtle;
+  }
+
+  /* Button Modifier: Danger Ghost - For destructive actions */
+  .dg-btn--danger-ghost {
+    @apply border border-dg-danger bg-transparent dg-text-white;
+  }
+
+  .dg-btn--danger-ghost:hover {
+    @apply border-transparent bg-dg-danger dg-text-white;
+  }
+
+  /* Button Modifier: Icon Only */
+  .dg-btn--icon-only {
+    @apply px-2 size-12;
+  }
+
+  .dg-btn--icon-only.dg-btn--sm {
+    @apply size-6;
+  }
+
+  /* Button Modifier: Collapse - Responsive mobile-adaptive */
+  .dg-btn--collapse {
+    @apply inline-flex;
+  }
+
+  @media (max-width: 768px) {
+    .dg-btn--collapse {
+      @apply w-full justify-center;
+    }
+  }
+
+  /* Button Icon Spacing - Prevent icons from shrinking */
+  .dg-btn i,
+  .dg-btn svg {
+    flex-shrink: 0;
+  }
+
+  /* ==========================================================================
+     LAYOUT COMPONENTS
+     ========================================================================== */
+
+  /* Section Component - Reusable content section */
+  .dg-section {
+    @apply w-full;
+    padding: 0.75rem;
+    margin-bottom: 1rem;
+  }
+
+  @media (min-width: 640px) {
+    .dg-section {
+      padding: 1.25rem 1rem;
+      margin-bottom: 1.5rem;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .dg-section {
+      padding: 2rem 1.5rem;
+      margin-bottom: 2rem;
+    }
+  }
+
+  .dg-section--compact {
+    padding: 0.5rem;
+    margin-bottom: 0.5rem;
+  }
+
+  @media (min-width: 640px) {
+    .dg-section--compact {
+      padding: 0.75rem;
+      margin-bottom: 0.75rem;
+    }
+  }
+
+  .dg-section--spacious {
+    padding: 1.5rem 0.75rem;
+    margin-bottom: 2rem;
+  }
+
+  @media (min-width: 640px) {
+    .dg-section--spacious {
+      padding: 2rem 1.5rem;
+      margin-bottom: 2.5rem;
+    }
+  }
+
+  .dg-section--bordered {
+    @apply rounded-lg border border-dg-pebble bg-dg-charcoal;
+  }
+
+  .dg-section--elevated {
+    @apply rounded-lg border border-dg-pebble bg-dg-charcoal shadow-dg-md;
+  }
+
+  /* Fieldset-style section with legend title */
+  .dg-section--fieldset {
+    @apply rounded-lg border border-dg-pebble relative;
+    padding-top: 2rem;
+  }
+
+  @media (min-width: 640px) {
+    .dg-section--fieldset {
+      padding-top: 2.5rem;
+    }
+  }
+
+  .dg-section--fieldset .dg-section-heading {
+    @apply absolute bg-dg-background dg-text-muted uppercase tracking-wide font-semibold;
+    @apply text-base px-2 m-0;
+    top: -0.75rem;
+    left: 1rem;
+  }
+
+  @media (min-width: 640px) {
+    .dg-section--fieldset .dg-section-heading {
+      font-size: 1.125rem;
+    }
+  }
+
+  /* Card Component */
+  .dg-card {
+    @apply w-full rounded-lg border border-dg-pebble bg-dg-charcoal flex flex-col;
+    @apply p-3 mb-3 shadow-dg-sm transition-shadow duration-200;
+  }
+
+  @media (min-width: 640px) {
+    .dg-card {
+      @apply p-4 mb-4;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .dg-card {
+      @apply p-6;
+    }
+  }
+
+  .dg-card:hover {
+    @apply shadow-dg-md;
+  }
+
+  /* Card Modifiers */
+  .dg-card--compact {
+    @apply p-2;
+  }
+
+  @media (min-width: 640px) {
+    .dg-card--compact {
+      @apply p-3;
+    }
+  }
+
+  .dg-card--spacious {
+    @apply p-4;
+  }
+
+  @media (min-width: 640px) {
+    .dg-card--spacious {
+      @apply p-6;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .dg-card--spacious {
+      @apply p-8;
+    }
+  }
+
+  .dg-card--bordered {
+    @apply border-2 border-dg-slate;
+  }
+
+  /* Card with structured layout (image, header, body, footer) */
+  .dg-card--structured {
+    @apply p-0 justify-between;
+  }
+
+  /* Selectable Card */
+  .dg-card--selectable {
+    @apply cursor-pointer transition-all duration-200;
+    @apply border-2 border-dg-pebble;
+    padding: 1.25rem;
+  }
+
+  .dg-card--selectable:hover {
+    @apply border-dg-slate;
+  }
+
+  .dg-card--selectable:has(input[type="radio"]:checked) {
+    @apply border-dg-primary;
+    background: rgba(19, 239, 149, 0.05);
+  }
+
+  /* Screen reader only utility */
+  .dg-sr-only {
+    @apply sr-only;
+  }
+
+  .dg-card--selectable input[type="radio"] {
+    @apply sr-only;
+  }
+
+  .dg-card--selectable__indicator {
+    @apply hidden;
+  }
+
+  .dg-card--selectable__icon {
+    @apply dg-text-white;
+    margin-right: 0.5rem;
+  }
+
+  .dg-card--selectable__content {
+    @apply flex-1 flex flex-col gap-1;
+  }
+
+  @media (max-width: 767px) {
+    .dg-card--selectable__content {
+      @apply flex-row items-center gap-3;
+    }
+  }
+
+  .dg-card--selectable .dg-item-title {
+    @apply text-base font-semibold dg-text-white;
+    display: flex;
+    align-items: center;
+  }
+
+  @media (max-width: 767px) {
+    .dg-card--selectable .dg-item-title {
+      margin-bottom: 0;
+      flex-shrink: 0;
+    }
+  }
+
+  @media (min-width: 768px) {
+    .dg-card--selectable .dg-item-title {
+      margin-bottom: 0.25rem;
+    }
+  }
+
+  .dg-card--selectable .dg-prose {
+    @apply text-sm dg-text-muted;
+  }
+
+  @media (max-width: 767px) {
+    .dg-card--selectable .dg-prose {
+      flex: 1;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+  }
+
+  /* File Upload Card */
+  .dg-card--file-upload {
+    @apply cursor-pointer transition-all duration-200;
+    @apply border-2 border-dashed border-dg-pebble;
+    padding: 1.25rem;
+  }
+
+  .dg-card--file-upload:hover {
+    @apply border-dg-slate;
+  }
+
+  .dg-card--file-upload:has(input[type="checkbox"]:checked) {
+    @apply border-dg-primary border-solid;
+    background: rgba(19, 239, 149, 0.05);
+  }
+
+  .dg-card--file-upload input[type="file"],
+  .dg-card--file-upload input[type="checkbox"] {
+    @apply sr-only;
+  }
+
+  .dg-card--file-upload__icon {
+    @apply dg-text-white;
+    margin-right: 0.5rem;
+  }
+
+  .dg-card--file-upload__content {
+    @apply flex-1 flex flex-col gap-1;
+  }
+
+  @media (max-width: 767px) {
+    .dg-card--file-upload__content {
+      @apply flex-row items-center gap-3;
+    }
+  }
+
+  .dg-card--file-upload .dg-item-title {
+    @apply text-base font-semibold dg-text-white;
+    display: flex;
+    align-items: center;
+  }
+
+  @media (max-width: 767px) {
+    .dg-card--file-upload .dg-item-title {
+      margin-bottom: 0;
+      flex-shrink: 0;
+    }
+  }
+
+  @media (min-width: 768px) {
+    .dg-card--file-upload .dg-item-title {
+      margin-bottom: 0.25rem;
+    }
+  }
+
+  .dg-card--file-upload .dg-prose {
+    @apply text-sm dg-text-muted;
+  }
+
+  @media (max-width: 767px) {
+    .dg-card--file-upload .dg-prose {
+      flex: 1;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+  }
+
+  /* Card Image */
+  .dg-card__image {
+    @apply w-full overflow-hidden flex-shrink-0;
+    border-radius: 0.5rem 0.5rem 0 0; /* Rounded top corners only */
+  }
+
+  .dg-card__image img {
+    @apply w-full h-full object-cover block;
+  }
+
+  /* Card Image Size Modifiers */
+  .dg-card__image--small {
+    @apply h-[7.5rem];
+  }
+
+  .dg-card__image--medium {
+    @apply h-[10rem];
+  }
+
+  .dg-card__image--large {
+    @apply h-[15rem];
+  }
+
+  .dg-card__image--aspect-4-3 {
+    @apply aspect-[4/3] h-auto;
+  }
+
+  /* Card Icon */
+  .dg-card__icon {
+    @apply flex items-center p-3 pt-6;
+  }
+
+  @media (min-width: 640px) {
+    .dg-card__icon {
+      @apply p-4 pt-8;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .dg-card__icon {
+      @apply px-6 pb-6 pt-10;
+    }
+  }
+
+  .dg-card__icon i,
+  .dg-card__icon svg {
+    @apply text-5xl dg-text-primary;
+  }
+
+  /* Card Icon Alignment Modifiers */
+  .dg-card__icon--left {
+    @apply justify-start;
+  }
+
+  .dg-card__icon--center {
+    @apply justify-center;
+  }
+
+  .dg-card__icon--right {
+    @apply justify-end;
+  }
+
+  /* Card Header */
+  .dg-card__header {
+    @apply flex flex-col gap-2 p-3;
+  }
+
+  @media (min-width: 640px) {
+    .dg-card__header {
+      @apply p-4;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .dg-card__header {
+      @apply px-6 pt-6 pb-0;
+    }
+  }
+
+  /* Card Body */
+  .dg-card__body {
+    @apply flex flex-col gap-3 p-3 flex-1;
+  }
+
+  @media (min-width: 640px) {
+    .dg-card__body {
+      @apply p-4;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .dg-card__body {
+      @apply px-6 pb-6 pt-0;
+    }
+  }
+
+  /* Card Footer */
+  .dg-card__footer {
+    @apply flex items-center gap-3 p-3 border-t border-transparent mt-auto;
+  }
+
+  @media (min-width: 640px) {
+    .dg-card__footer {
+      @apply p-4;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .dg-card__footer {
+      @apply p-6;
+    }
+  }
+
+  /* Card Footer with Border */
+  .dg-card__footer--bordered {
+    @apply border-t-dg-pebble;
+  }
+
+  /* Code Block Component */
+  .dg-code-block {
+    @apply w-full rounded-lg border border-dg-pebble bg-dg-charcoal overflow-auto;
+    @apply p-2 my-3 max-h-[12.5rem];
+    -webkit-overflow-scrolling: touch;
+  }
+
+  @media (min-width: 640px) {
+    .dg-code-block {
+      @apply p-3 my-4 max-h-[15.625rem];
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .dg-code-block {
+      @apply max-h-[18.75rem];
+    }
+  }
+
+  .dg-code-block pre {
+    @apply m-0 p-0 font-dg-mono text-xs dg-text-fog whitespace-pre-wrap break-words;
+    line-height: 1.3;
+  }
+
+  @media (min-width: 640px) {
+    .dg-code-block pre {
+      @apply text-sm;
+    }
+  }
+
+  .dg-code-block--compact {
+    @apply max-h-[7.5rem] p-1;
+  }
+
+  @media (min-width: 640px) {
+    .dg-code-block--compact {
+      @apply max-h-[9.375rem] p-2;
+    }
+  }
+
+  .dg-code-block--tall {
+    @apply max-h-[18.75rem];
+  }
+
+  @media (min-width: 640px) {
+    .dg-code-block--tall {
+      @apply max-h-[25rem];
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .dg-code-block--tall {
+      @apply max-h-[31.25rem];
+    }
+  }
+
+  .dg-code-block--no-scroll {
+    @apply overflow-visible max-h-none;
+  }
+
+  /* ==========================================================================
+     TYPOGRAPHY COMPONENTS
+     ========================================================================== */
+
+  /* Hero Title */
+  .dg-hero-title {
+    @apply text-center font-bold font-dg-noto text-5xl leading-tight mb-6;
+    @apply bg-gradient-to-r from-dg-secondary to-dg-primary bg-clip-text;
+    -webkit-text-fill-color: transparent;
+    letter-spacing: -0.02em;
+    font-feature-settings: "liga" 0, "dlig" 0, "hlig" 0, "ordn" 0, "ss09", "kern";
+    font-kerning: normal;
+  }
+
+  @media (max-width: 1024px) {
+    .dg-hero-title {
+      @apply text-4xl;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .dg-hero-title {
+      @apply text-3xl;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .dg-hero-title {
+      @apply text-2xl;
+    }
+  }
+
+  /* Hero Section Container */
+  .dg-hero {
+    @apply w-full text-center py-16 px-4;
+  }
+
+  @media (max-width: 768px) {
+    .dg-hero {
+      @apply py-12 px-4;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .dg-hero {
+      @apply py-8 px-4;
+    }
+  }
+
+  /* Hero Content Container */
+  .dg-hero__content {
+    @apply flex flex-col gap-6 mx-auto max-w-[53.125rem];
+  }
+
+  @media (max-width: 768px) {
+    .dg-hero__content {
+      @apply gap-5;
+    }
+  }
+
+  /* Hero Announcement Banner */
+  .dg-hero__announcement {
+    @apply inline-flex items-center justify-center rounded-full border;
+    @apply bg-dg-translucent border-dg-slate/30 py-2 px-5 mx-auto mb-2;
+    @apply no-underline cursor-pointer w-fit gap-3 transition-all duration-200;
+  }
+
+  .dg-hero__announcement:hover {
+    @apply border-dg-primary -translate-y-0.5;
+    background-color: rgba(19, 239, 149, 0.1);
+    box-shadow: 0 0.25rem 0.75rem rgba(19, 239, 149, 0.15);
+  }
+
+  .dg-hero__announcement-text {
+    @apply dg-text-white text-sm font-normal whitespace-nowrap;
+  }
+
+  @media (max-width: 640px) {
+    .dg-hero__announcement-text {
+      @apply text-xs whitespace-normal;
+    }
+  }
+
+  .dg-hero__announcement-cta {
+    @apply inline-flex items-center dg-text-secondary text-sm font-semibold gap-2 transition-[gap] duration-200;
+  }
+
+  .dg-hero__announcement:hover .dg-hero__announcement-cta {
+    @apply gap-3;
+  }
+
+  @media (max-width: 640px) {
+    .dg-hero__announcement-cta {
+      @apply text-xs;
+    }
+  }
+
+  /* Hero Body Text */
+  .dg-hero__body {
+    @apply text-center dg-text-fog text-lg leading-7 font-normal mx-auto max-w-[53.125rem];
+  }
+
+  @media (max-width: 768px) {
+    .dg-hero__body {
+      @apply text-base leading-relaxed;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .dg-hero__body {
+      @apply text-[0.9375rem] leading-normal;
+    }
+  }
+
+  /* Hero Actions */
+  .dg-hero__actions {
+    @apply flex items-center justify-center flex-wrap gap-4 mt-2;
+  }
+
+  @media (max-width: 640px) {
+    .dg-hero__actions {
+      @apply flex-col w-full;
+    }
+
+    .dg-hero__actions > * {
+      @apply w-full;
+    }
+  }
+
+  /* Section Heading */
+  .dg-section-heading {
+    @apply font-semibold font-dg-noto text-2xl dg-text-white mb-6;
+    @apply flex flex-wrap items-baseline gap-2;
+  }
+
+  @media (max-width: 640px) {
+    .dg-section-heading {
+      @apply text-xl mb-3 gap-1.5;
+    }
+  }
+
+  /* Small text within section heading */
+  .dg-section-heading small {
+    @apply font-normal text-base dg-text-muted;
+  }
+
+  @media (max-width: 640px) {
+    .dg-section-heading small {
+      @apply text-sm;
+    }
+  }
+
+  /* Page Heading */
+  .dg-page-heading {
+    @apply mb-8;
+  }
+
+  @media (max-width: 640px) {
+    .dg-page-heading {
+      @apply mb-6;
+    }
+  }
+
+  .dg-page-heading__title {
+    @apply font-semibold font-dg-noto text-4xl dg-text-white mb-2 leading-tight;
+  }
+
+  @media (max-width: 768px) {
+    .dg-page-heading__title {
+      @apply text-3xl;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .dg-page-heading__title {
+      @apply text-2xl;
+    }
+  }
+
+  .dg-page-heading__description {
+    @apply dg-text-muted text-lg leading-relaxed m-0 max-w-[65ch];
+  }
+
+  @media (max-width: 768px) {
+    .dg-page-heading__description {
+      @apply text-base;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .dg-page-heading__description {
+      @apply text-[0.9375rem];
+    }
+  }
+
+  /* Card Heading */
+  .dg-card-heading {
+    @apply font-medium font-dg-noto text-xl dg-text-white mb-3;
+    @apply flex flex-wrap items-baseline gap-1.5;
+  }
+
+  /* Small text within card heading */
+  .dg-card-heading small {
+    @apply font-normal text-sm dg-text-muted;
+  }
+
+  /* Item Title */
+  .dg-item-title {
+    @apply font-medium font-dg-noto text-base dg-text-white mb-1;
+    @apply flex flex-wrap items-baseline gap-1;
+  }
+
+  /* Small text within item title */
+  .dg-item-title small {
+    @apply font-normal text-xs dg-text-muted;
+  }
+
+  /* Prose Text */
+  .dg-prose {
+    @apply w-full dg-text-fog text-sm leading-snug mb-3;
+  }
+
+  @media (min-width: 640px) {
+    .dg-prose {
+      @apply text-base mb-4 max-w-[65ch];
+    }
+  }
+
+  .dg-prose.dg-prose--block {
+    @apply max-w-none w-full;
+  }
+
+  .dg-prose--large {
+    @apply text-base;
+  }
+
+  @media (min-width: 640px) {
+    .dg-prose--large {
+      @apply text-lg;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .dg-prose--large {
+      @apply text-xl;
+    }
+  }
+
+  .dg-prose--small {
+    @apply text-xs dg-text-muted;
+  }
+
+  @media (min-width: 640px) {
+    .dg-prose--small {
+      @apply text-sm;
+    }
+  }
+
+  /* ==========================================================================
+     FORM COMPONENTS
+     ========================================================================== */
+
+  /* Form Input Base Styles */
+  .dg-input {
+    @apply w-full px-4 py-3 rounded border border-dg-pebble bg-dg-charcoal;
+    @apply dg-text-white font-dg-sans text-sm;
+    @apply outline-none transition-all duration-300;
+    @apply shadow-dg-sm;
+    height: 2.75rem;
+  }
+
+  .dg-input::placeholder {
+    @apply dg-text-muted;
+  }
+
+  .dg-input:focus {
+    @apply border-dg-primary;
+    box-shadow: 0 0 0 0.0625rem theme("colors.dg-primary");
+  }
+
+  .dg-input:disabled {
+    @apply opacity-50 cursor-not-allowed;
+  }
+
+  .dg-input--inline {
+    @apply min-w-[12.5rem];
+  }
+
+  .dg-input--full {
+    @apply max-w-none;
+  }
+
+  /* Select (dropdown) specific */
+  .dg-input[type="select"],
+  select.dg-input {
+    @apply appearance-none;
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='rgb(255,255,255)' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
+    background-position: right 0.75rem center;
+    background-repeat: no-repeat;
+    background-size: 1.5em 1.5em;
+    padding-right: 2.5rem;
+  }
+
+  /* Textarea */
+  .dg-textarea {
+    @apply dg-input;
+    min-height: 6.25rem;
+    resize: vertical;
+    height: auto;
+  }
+
+  /* Checkbox */
+  .dg-checkbox {
+    @apply appearance-none w-5 h-5 rounded border border-dg-pebble bg-dg-charcoal;
+    @apply cursor-pointer transition-all duration-200;
+    @apply flex-shrink-0;
+    position: relative;
+  }
+
+  .dg-checkbox:checked {
+    @apply bg-dg-primary border-dg-primary;
+  }
+
+  .dg-checkbox:checked::after {
+    content: "";
+    position: absolute;
+    left: 0.375rem;
+    top: 0.125rem;
+    width: 0.3125rem;
+    height: 0.625rem;
+    border: solid black;
+    border-width: 0 0.125rem 0.125rem 0;
+    transform: rotate(45deg);
+  }
+
+  .dg-checkbox:focus {
+    @apply outline-none;
+    box-shadow: 0 0 0 0.125rem theme("colors.dg-primary/50");
+  }
+
+  /* Checkbox Label */
+  .dg-checkbox-label {
+    @apply flex items-start gap-2 cursor-pointer text-sm dg-text-fog;
+  }
+
+  .dg-checkbox-label:hover .dg-checkbox {
+    @apply border-dg-slate;
+  }
+
+  /* Checkbox Description Container */
+  .dg-checkbox-description {
+    @apply flex flex-col gap-2;
+  }
+
+  /* Checkbox Group Container */
+  .dg-checkbox-group {
+    @apply flex flex-col gap-3;
+  }
+
+  /* Form Field */
+  .dg-form-field {
+    @apply flex flex-col gap-3 mb-4 w-full;
+  }
+
+  @media (min-width: 640px) {
+    .dg-form-field {
+      @apply max-w-md;
+    }
+  }
+
+  .dg-form-field--full {
+    @apply max-w-none;
+  }
+
+  /* Form Field Error State */
+  .dg-form-field--error .dg-input,
+  .dg-form-field--error .dg-textarea {
+    @apply border-dg-danger;
+  }
+
+  .dg-form-field--error .dg-form-helper {
+    @apply dg-text-danger;
+  }
+
+  /* Form Field Success State */
+  .dg-form-field--success .dg-input,
+  .dg-form-field--success .dg-textarea {
+    @apply border-dg-success;
+  }
+
+  .dg-form-field--success .dg-form-helper {
+    @apply dg-text-success;
+  }
+
+  /* Form Label */
+  .dg-form-label {
+    @apply text-sm font-medium dg-text-white;
+  }
+
+  /* Form Error Message (deprecated - use dg-form-helper with dg-form-field--error) */
+  .dg-form-error {
+    @apply text-xs dg-text-danger block;
+    margin: 0;
+  }
+
+  /* Form Helper Text */
+  .dg-form-helper {
+    @apply text-xs dg-text-muted block;
+    margin: 0;
+  }
+
+  /* File Upload / Drag & Drop Zone */
+  .dg-drag-drop-zone {
+    @apply relative border-2 border-dashed border-dg-pebble rounded-lg;
+    @apply bg-dg-charcoal transition-all duration-200;
+    @apply flex flex-col items-center justify-center gap-3;
+    @apply cursor-pointer;
+    padding: 3rem 2rem;
+    min-height: 12.5rem;
+  }
+
+  .dg-drag-drop-zone:hover {
+    @apply border-dg-slate bg-dg-background;
+  }
+
+  .dg-drag-drop-zone.drag-over {
+    @apply border-dg-primary bg-dg-translucent;
+  }
+
+  .dg-drag-drop-zone__input {
+    @apply absolute inset-0 w-full h-full opacity-0 cursor-pointer;
+  }
+
+  .dg-drag-drop-zone__icon {
+    @apply text-5xl dg-text-muted;
+  }
+
+  .dg-drag-drop-zone:hover .dg-drag-drop-zone__icon {
+    @apply dg-text-primary;
+  }
+
+  .dg-drag-drop-zone__text {
+    @apply text-base dg-text-white font-medium;
+  }
+
+  .dg-drag-drop-zone__hint {
+    @apply text-sm dg-text-muted;
+  }
+
+  /* ==========================================================================
+     STATUS & FEEDBACK COMPONENTS
+     ========================================================================== */
+
+  /* Status Banner */
+  .dg-status {
+    @apply w-full italic dg-text-fog text-sm leading-snug py-1 my-2;
+  }
+
+  @media (min-width: 640px) {
+    .dg-status {
+      @apply text-base py-2 my-3;
+    }
+  }
+
+  .dg-status--info {
+    @apply dg-text-fog;
+  }
+
+  .dg-status--success {
+    @apply dg-text-success;
+  }
+
+  .dg-status--warning {
+    @apply dg-text-warning;
+  }
+
+  .dg-status--error {
+    @apply dg-text-danger;
+  }
+
+  .dg-status--primary {
+    @apply dg-text-primary;
+  }
+
+  .dg-status--secondary {
+    @apply dg-text-secondary;
+  }
+
+  .dg-status--with-icon {
+    @apply flex items-start gap-1;
+  }
+
+  .dg-status--with-icon .dg-status__icon {
+    @apply flex-shrink-0 text-[1em] mt-[0.1em];
+  }
+
+  .dg-status--compact {
+    @apply my-1 py-0.5 text-xs;
+  }
+
+  @media (min-width: 640px) {
+    .dg-status--compact {
+      @apply text-sm;
+    }
+  }
+
+  /* Spinner */
+  .dg-spinner {
+    @apply rounded-full size-10 border-[3px] border-dg-pebble border-t-dg-primary;
+    @apply mx-auto mb-3 animate-spin;
+  }
+
+  @keyframes dg-spin {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+
+  /* Processing Title */
+  .dg-processing-title {
+    @apply font-medium font-dg-noto text-xl dg-text-white mb-1;
+  }
+
+  /* Modal Overlay */
+  .dg-modal-overlay {
+    @apply hidden fixed inset-0 items-center justify-center bg-black/80 z-50;
+  }
+
+  .dg-modal-overlay.visible,
+  .dg-modal-overlay--visible {
+    @apply flex;
+  }
+
+  .dg-modal-content {
+    @apply text-center max-w-[25rem] m-3;
+  }
+
+  /* ==========================================================================
+     UTILITY COMPONENTS
+     ========================================================================== */
+
+  /* Constrained Width Container */
+  .dg-constrain-width {
+    @apply w-full;
+  }
+
+  @media (min-width: 640px) {
+    .dg-constrain-width {
+      @apply max-w-[70rem] mx-auto;
+    }
+  }
+
+  /* Center Horizontally - Complements dg-constrain-width */
+  .dg-center-h {
+    @apply mx-auto;
+  }
+
+  /* Responsive Grid */
+  .dg-grid-mobile-stack {
+    @apply flex flex-col gap-4;
+  }
+
+  @media (min-width: 640px) {
+    .dg-grid-mobile-stack {
+      @apply flex-row gap-4;
+    }
+  }
+
+  .dg-grid-mobile-stack > * {
+    @apply flex-1;
+  }
+
+  /* Action Group */
+  .dg-action-group {
+    @apply flex flex-wrap justify-center gap-4;
+  }
+
+  @media (max-width: 640px) {
+    .dg-action-group {
+      @apply flex-col items-stretch;
+    }
+
+    .dg-action-group .dg-btn {
+      @apply w-full;
+    }
+  }
+
+  /* Header */
+  .dg-header {
+    @apply w-full;
+    background: #050506; /* dg-almost-black */
+    padding: 1rem 1.5rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .dg-header__container {
+    @apply flex items-center justify-between max-w-screen-2xl mx-auto;
+  }
+
+  .dg-header__logo {
+    @apply flex items-center gap-3;
+  }
+
+  .dg-header__logo-image {
+    @apply h-8 w-auto;
+  }
+
+  .dg-header__logo-text {
+    @apply font-dg-noto font-bold text-xl dg-text-white;
+  }
+
+  .dg-header__nav {
+    @apply flex items-center gap-4;
+  }
+
+  .dg-header__profile-link {
+    @apply -m-1.5 p-1.5 block;
+  }
+
+  .dg-header__profile-avatar {
+    @apply size-8 rounded-full bg-gray-800 outline -outline-offset-1 outline-white/10;
+  }
+
+  @media (max-width: 768px) {
+    .dg-header {
+      padding: 0.75rem 1rem;
+    }
+
+    .dg-header__logo-text {
+      @apply text-lg;
+    }
+  }
+
+  /* Footer */
+  .dg-footer {
+    @apply text-center border-t border-dg-pebble mt-16;
+  }
+
+  /* Text Center Utility */
+  .dg-text-center {
+    @apply text-center;
+  }
+
+  /* Text Color Utilities */
+  .dg-text-danger {
+    @apply text-dg-danger;
+  }
+
+  .dg-text-success {
+    @apply text-dg-success;
+  }
+
+  .dg-text-warning {
+    @apply text-dg-warning;
+  }
+
+  .dg-text-primary {
+    @apply text-dg-primary;
+  }
+
+  .dg-text-secondary {
+    @apply text-dg-secondary;
+  }
+
+  .dg-text-muted {
+    @apply text-dg-muted;
+  }
+
+  .dg-text-fog {
+    @apply text-dg-fog;
+  }
+
+  .dg-text-white {
+    @apply text-white;
+  }
+
+  /* Newsletter Layout */
+  .dg-newsletter-container {
+    @apply flex flex-col gap-4;
+  }
+
+  .dg-newsletter-container--compact {
+    @apply flex flex-col gap-3;
+  }
+
+  .dg-newsletter-form {
+    @apply flex flex-col gap-4;
+  }
+
+  .dg-newsletter-form--compact {
+    @apply flex flex-col gap-3;
+  }
+
+  .dg-newsletter-form--inline {
+    @apply flex gap-2 w-full;
+  }
+
+  @media (min-width: 640px) {
+    .dg-newsletter-form--inline {
+      @apply w-auto;
+    }
+  }
+
+  .dg-newsletter-header {
+    @apply flex flex-col gap-3 items-start;
+  }
+
+  @media (min-width: 640px) {
+    .dg-newsletter-header {
+      @apply flex-row items-center;
+    }
+  }
+
+  .dg-newsletter-header__content {
+    @apply flex-1;
+  }
+
+  .dg-newsletter-header__actions {
+    @apply w-full;
+  }
+
+  @media (min-width: 640px) {
+    .dg-newsletter-header__actions {
+      @apply w-auto;
+    }
+  }
+
+  /* Logo Container */
+  .dg-logo-container {
+    @apply flex justify-center;
+  }
+
+  .dg-logo {
+    @apply h-8 w-auto;
+  }
+
+  /* Social Links Container */
+  .dg-social-links {
+    @apply flex justify-center gap-4;
+  }
+
+  /* Typography Utilities */
+  .dg-text-tagline {
+    @apply text-center dg-text-fog text-sm;
+  }
+
+  .dg-text-subtitle {
+    @apply dg-text-fog text-sm;
+  }
+
+  .dg-text-heading {
+    @apply dg-text-white text-base font-medium;
+  }
+
+  .dg-text-heading--with-margin {
+    @apply dg-text-white text-base font-medium mb-1;
+  }
+
+  .dg-text-legal {
+    @apply text-xs dg-text-muted text-center;
+  }
+
+  /* ==========================================================================
+     MULTI-COLUMN LAYOUT COMPONENTS
+
+     Responsive collapse pattern:
+     - Mobile (< 768px): All columns stacked vertically
+     - Tablet (768px+): Right sidebar moves to side, left stacked on top
+     - Desktop (1024px+): All three columns side-by-side
+     ========================================================================== */
+
+  /* Column Container - parent wrapper for all columns */
+  .dg-columns {
+    @apply flex flex-col w-full;
+  }
+
+  /* At tablet: show right sidebar on the side */
+  @media (min-width: 768px) {
+    .dg-columns {
+      @apply flex-row;
+    }
+  }
+
+  /* Column Wrapper - groups left sidebar and main content together */
+  .dg-columns__wrapper {
+    @apply flex flex-col flex-1 min-w-0;
+  }
+
+  /* At desktop: show left sidebar on the side */
+  @media (min-width: 1024px) {
+    .dg-columns__wrapper {
+      @apply flex-row;
+    }
+  }
+
+  /* Base Column - padding for all columns */
+  .dg-column {
+    @apply px-4 py-6 min-w-0;
+  }
+
+  @media (min-width: 640px) {
+    .dg-column {
+      @apply px-6;
+    }
+  }
+
+  /* Main Content Column - always fills available space */
+  .dg-column--main {
+    @apply flex-1;
+  }
+
+  /* Left Sidebar - fixed width on desktop, full width on mobile/tablet */
+  .dg-column--sidebar-left {
+    /* Layout only - no colors */
+  }
+
+  @media (min-width: 1024px) {
+    .dg-column--sidebar-left {
+      @apply w-48 flex-shrink-0;
+    }
+
+    .dg-column--sidebar-left.dg-column--sm {
+      @apply w-64 flex-shrink-0;
+    }
+
+    .dg-column--sidebar-left.dg-column--lg {
+      @apply w-96 flex-shrink-0;
+    }
+
+    .dg-column--sidebar-left.dg-column--xl {
+      @apply w-128 flex-shrink-0;
+    }
+  }
+
+  /* Right Sidebar - fixed width on tablet+, full width on mobile */
+  .dg-column--sidebar-right {
+    /* Layout only - no colors */
+  }
+
+  @media (min-width: 1024px) {
+    .dg-column--sidebar-right {
+      @apply w-48 flex-shrink-0;
+    }
+
+    .dg-column--sidebar-right.dg-column--sm {
+      @apply w-64 flex-shrink-0;
+    }
+
+    .dg-column--sidebar-right.dg-column--lg {
+      @apply w-96 flex-shrink-0;
+    }
+
+    .dg-column--sidebar-right.dg-column--xl {
+      @apply w-128 flex-shrink-0;
+    }
+  }
+
+  /* ==========================================================================
+     LINK COMPONENTS
+     ========================================================================== */
+
+  /* Primary Link with hover effect */
+  .dg-link {
+    @apply dg-text-primary transition-opacity duration-200;
+  }
+
+  .dg-link:hover {
+    @apply opacity-80;
+  }
+
+  /* Social Icon Link */
+  .dg-social-link {
+    @apply dg-text-fog transition-colors duration-200 text-xl;
+  }
+
+  .dg-social-link:hover {
+    @apply dg-text-primary;
+  }
+}

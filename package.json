@@ -1,17 +1,41 @@
 {
-  "name": "node-text-intelligence",
+  "name": "@deepgram/node-text-intelligence-starter",
   "version": "1.0.0",
-  "description": "Simple Text Intelligence starter app for validating conformance tests",
+  "description": "Text Intelligence starter app using Deepgram's Read API for summarization, topics, sentiment, and intent analysis",
   "type": "module",
   "main": "server.js",
   "scripts": {
-    "start": "node server.js",
-    "dev": "node --watch server.js"
+    "postinstall": "cd frontend && pnpm install",
+    "build": "cd frontend && pnpm run build",
+    "start": "node --no-deprecation server.js",
+    "dev": "npm-run-all --parallel dev:backend dev:frontend",
+    "dev:backend": "NODE_ENV=development nodemon --no-deprecation server.js",
+    "dev:frontend": "cd frontend && pnpm run dev -- --port 5173 --no-open --logLevel error"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/deepgram-starters/node-text-intelligence.git"
   },
   "dependencies": {
     "@deepgram/sdk": "^4.11.2",
     "express": "^4.18.0",
     "dotenv": "^16.0.0",
-    "multer": "^1.4.5-lts.1"
+    "http-proxy-middleware": "^3.0.3",
+    "npm-run-all": "^4.1.5"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.9"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
   }
 }

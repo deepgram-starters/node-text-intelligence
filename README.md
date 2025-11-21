@@ -1,75 +1,69 @@
 # Node Text Intelligence Starter
 
-> @TODO: Refactor App to meet Starter Standards
-
-Get started using Deepgram's Text Intelligence API with this Node.js starter application. This application demonstrates how to analyze text with features like summarization, sentiment analysis, topic detection, and intent recognition using Deepgram's Text Intelligence API.
-
-## What is Deepgram?
-
-[Deepgram's](https://deepgram.com/) voice AI platform provides APIs for speech-to-text, text-to-speech, and full speech-to-speech voice agents. Over 200,000+ developers use Deepgram to build voice AI products and features.
-
-## Sign-up to Deepgram
-
-Before you start, it's essential to generate a Deepgram API key to use in this project. [Sign-up now for Deepgram and create an API key](https://console.deepgram.com/signup?jump=keys).
+Text intelligence demo using Deepgram's Read API with Node.js backend and web frontend.
 
 ## Prerequisites
 
-- Node.js 18 or higher
-- npm or yarn for package installation
-- A [Deepgram API Key](https://console.deepgram.com/signup?jump=keys)
+- [Deepgram API Key](https://console.deepgram.com/signup?jump=keys) (sign up for free)
+- Node.js 18+ and pnpm
 
-## Quickstart
+## Quick Start
 
-Follow these steps to get started with this starter application.
-
-#### Clone the repository
-
-Go to GitHub and clone the repository.
+1. **Install dependencies**
 
 ```bash
-git clone https://github.com/deepgram-starters/node-text-intelligence.git
-cd node-text-intelligence
+pnpm install
 ```
 
-#### Install dependencies
+This automatically installs both backend and frontend dependencies.
 
-Install the project dependencies.
+2. **Set your API key**
 
-```bash
-npm install
-```
-
-#### Edit the config file
-
-Copy the code from `sample.env` and create a new file called `.env`. Paste in the code and enter your API key you generated in the [Deepgram console](https://console.deepgram.com/).
+Create a `.env` file:
 
 ```bash
 DEEPGRAM_API_KEY=your_api_key_here
 ```
 
-#### Run the application
+3. **Run the app**
 
-Start the server:
-
-```bash
-npm start
-```
-
-Or for development with auto-reload:
+**Development mode** (with hot reload):
 
 ```bash
-npm run dev
+pnpm dev
 ```
 
-The server will start on `http://localhost:3000`.
+**Production mode** (build and serve):
+
+```bash
+pnpm build
+pnpm start
+```
+
+Open [http://localhost:3000](http://localhost:3000)
+
+## Features
+
+- Analyze text or URLs for intelligence insights
+- Multiple analysis types:
+  - **Summarization**: Generate concise summaries
+  - **Topic Detection**: Identify key topics
+  - **Sentiment Analysis**: Detect positive, negative, or neutral sentiment
+  - **Intent Recognition**: Understand user intentions
+- View analysis history
+
+## How It Works
+
+- **Backend** (`server.js`): Node.js/Express server implementing the `/text-intelligence/analyze` endpoint
+- **Frontend** (`frontend/`): Vite-powered web UI for text analysis and results display
+- **API**: Integrates with [Deepgram's Text Intelligence API](https://developers.deepgram.com/)
+
 
 ## Getting Help
 
-We love to hear from you so if you have questions, comments or find a bug in the project, let us know! You can either:
-
-- [Open an issue in this repository](https://github.com/deepgram-starters/node-text-intelligence/issues/new)
-- [Join the Deepgram Github Discussions Community](https://github.com/orgs/deepgram/discussions)
-- [Join the Deepgram Discord Community](https://discord.gg/xWRaCDBtW4)
+- [Open an issue](https://github.com/deepgram-starters/node-text-intelligence/issues/new)
+- [Join our Discord](https://discord.gg/xWRaCDBtW4)
+- [Deepgram Documentation](https://developers.deepgram.com/)
 
 ## Contributing
 
@@ -85,8 +79,4 @@ For security policy and procedures, see our [Security Policy](./SECURITY.md).
 
 ## License
 
-This project is licensed under the MIT license. See the [LICENSE](./LICENSE) file for more info.
-
-## Author
-
-[Deepgram](https://deepgram.com)
+MIT - See [LICENSE](./LICENSE)
