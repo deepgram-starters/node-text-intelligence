@@ -7,12 +7,17 @@ language = "JavaScript"
 framework = "Node"
 sdk = "4.11.2"
 
+[pre-build]
+command = "pnpm install"
+message = "Dependencies installed"
+
 [build]
-command = "npm install"
+command = "pnpm build"
+message = "Build completed"
 
 [config]
 sample = "sample.env"
 output = ".env"
 
 [post-build]
-message = "Run `npm start` to start the server."
+message = "Run `pnpm start` to get up and running."
