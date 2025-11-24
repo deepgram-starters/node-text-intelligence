@@ -1,39 +1,117 @@
+/**
+ * Node Text Intelligence Starter - Backend Server
+ *
+ * This is a simple Express server that provides a text intelligence API endpoint
+ * powered by Deepgram's Text Intelligence service. It's designed to be easily
+ * modified and extended for your own projects.
+ *
+ * Key Features:
+ * - Contract-compliant API endpoint: POST /text-intelligence/analyze
+ * - Accepts text or URL in JSON body
+ * - Supports multiple intelligence features: summarization, topics, sentiment, intents
+ * - Proxies to Vite dev server in development
+ * - Serves static frontend in production
+ */
+
 import express from 'express';
 import { createClient } from '@deepgram/sdk';
+import { createProxyMiddleware } from 'http-proxy-middleware';
 import dotenv from 'dotenv';
-import multer from 'multer';
+import path from 'path';
+import { fileURLToPath } from 'url';
 
 dotenv.config();
 
-const app = express();
+// ES module equivalents for __dirname
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
-// Configure Multer for multipart/form-data (stores in memory)
-const storage = multer.memoryStorage();
-const upload = multer({ storage: storage });
+// ============================================================================
+// CONFIGURATION
+// ============================================================================
+
+const CONFIG = {
+  port: process.env.PORT || 3000,
+  host: process.env.HOST || '0.0.0.0',
+  vitePort: process.env.VITE_PORT || 5173,
+  isDevelopment: process.env.NODE_ENV === 'development',
+};
+
+// ============================================================================
+// API KEY LOADING
+// ============================================================================
+
+function loadApiKey() {
+  const apiKey = process.env.DEEPGRAM_API_KEY;
+
+  if (!apiKey) {
+    console.error('\n❌ ERROR: Deepgram API key not found!\n');
+    console.error('Please set your API key in .env file:');
+    console.error('   DEEPGRAM_API_KEY=your_api_key_here\n');
+    console.error('Get your API key at: https://console.deepgram.com\n');
+    process.exit(1);
+  }
+
+  return apiKey;
+}
+
+const apiKey = loadApiKey();
 
 // Initialize Deepgram client
-const deepgram = createClient(process.env.DEEPGRAM_API_KEY || '');
+const deepgram = createClient(apiKey);
 
-// Text Intelligence Interface Compliant Endpoint (implements minimal starter-contracts specification)
-// Accepts multipart/form-data with either text or url
-app.post('/text-intelligence/analyze', upload.none(), async (req, res) => {
+// Initialize Express app
+const app = express();
+
+// Middleware for parsing JSON request bodies
+app.use(express.json());
+
+// ============================================================================
+// API ROUTES
+// ============================================================================
+
+/**
+ * POST /text-intelligence/analyze
+ *
+ * Contract-compliant text intelligence endpoint per starter-contracts specification.
+ * Accepts:
+ * - Query parameters: summarize, topics, sentiment, intents, language (all optional)
+ * - Header: X-Request-Id (optional, echoed back)
+ * - Body: JSON with either text or url field (required, not both)
+ *
+ * Returns:
+ * - Success (200): JSON with results object containing requested intelligence features
+ * - Error (4XX): JSON error response matching contract format
+ */
+app.post('/text-intelligence/analyze', async (req, res) => {
+  // Echo X-Request-Id header if provided
+  const requestId = req.headers['x-request-id'];
+  if (requestId) {
+    res.setHeader('X-Request-Id', requestId);
+  }
+
   try {
-    // Echo X-Request-Id header if provided
-    const requestId = req.headers['x-request-id'];
-    if (requestId) {
-      res.setHeader('X-Request-Id', requestId);
-    }
-
-    // Extract text or url from multipart form data
+    // Extract text or url from JSON body
     const { text, url } = req.body;
 
-    // Validate that either text or url is provided (but not neither)
+    // Validate that exactly one of text or url is provided
     if (!text && !url) {
       return res.status(400).json({
         error: {
           type: "validation_error",
           code: "INVALID_TEXT",
           message: "Request must contain either 'text' or 'url' field",
+          details: {}
+        }
+      });
+    }
+
+    if (text && url) {
+      return res.status(400).json({
+        error: {
+          type: "validation_error",
+          code: "INVALID_TEXT",
+          message: "Request must contain either 'text' or 'url', not both",
           details: {}
         }
       });
@@ -97,8 +175,8 @@ app.post('/text-intelligence/analyze', upload.none(), async (req, res) => {
       });
     }
 
-    // Extract only the language and summarize query parameters (minimal contract)
-    const { language, summarize } = req.query;
+    // Extract query parameters for intelligence features
+    const { language, summarize, topics, sentiment, intents } = req.query;
 
     // Build Deepgram options
     const options = {
@@ -108,8 +186,33 @@ app.post('/text-intelligence/analyze', upload.none(), async (req, res) => {
     // Handle summarize parameter (boolean or string)
     if (summarize === 'true' || summarize === true) {
       options.summarize = true;
-    } else if (summarize === 'v1' || summarize === 'v2') {
+    } else if (summarize === 'v2') {
       options.summarize = summarize;
+    } else if (summarize === 'v1') {
+      // v1 is no longer supported
+      return res.status(400).json({
+        error: {
+          type: "validation_error",
+          code: "INVALID_TEXT",
+          message: "Summarization v1 is no longer supported. Please use v2 or true.",
+          details: {}
+        }
+      });
+    }
+
+    // Handle topics parameter
+    if (topics === 'true' || topics === true) {
+      options.topics = true;
+    }
+
+    // Handle sentiment parameter
+    if (sentiment === 'true' || sentiment === true) {
+      options.sentiment = true;
+    }
+
+    // Handle intents parameter
+    if (intents === 'true' || intents === true) {
+      options.intents = true;
     }
 
     // Call Deepgram API (SDK v4 returns { result, error })
@@ -128,11 +231,9 @@ app.post('/text-intelligence/analyze', upload.none(), async (req, res) => {
       });
     }
 
-    // Return simplified response matching contract
+    // Return full results object (includes all requested features)
     res.json({
-      results: {
-        summary: result.results?.summary || {}
-      }
+      results: result.results || {}
     });
 
   } catch (err) {
@@ -172,9 +273,46 @@ app.get('/health', (req, res) => {
   res.json({ status: 'ok', service: 'text-intelligence' });
 });
 
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
-  console.log(`🚀 Text Intelligence server running on http://localhost:${PORT}`);
-  console.log(`📊 Test endpoint: POST http://localhost:${PORT}/text-intelligence/analyze`);
+// ============================================================================
+// FRONTEND SERVING - Development proxy or production static files
+// ============================================================================
+
+/**
+ * In development: Proxy all requests to Vite dev server for hot reload
+ * In production: Serve pre-built static files from frontend/dist
+ *
+ * IMPORTANT: This MUST come AFTER your API routes to avoid conflicts
+ */
+if (CONFIG.isDevelopment) {
+  // Development: Proxy to Vite dev server
+  app.use(
+    '/',
+    createProxyMiddleware({
+      target: `http://localhost:${CONFIG.vitePort}`,
+      changeOrigin: true,
+      ws: true, // Enable WebSocket proxying for Vite HMR (Hot Module Reload)
+    })
+  );
+} else {
+  // Production: Serve static files from frontend/dist
+  const distPath = path.join(__dirname, 'frontend', 'dist');
+  app.use(express.static(distPath));
+}
+
+// ============================================================================
+// SERVER START
+// ============================================================================
+
+app.listen(CONFIG.port, CONFIG.host, () => {
+  console.log(
+    `\n🚀 Text Intelligence Backend Server running at http://${CONFIG.host}:${CONFIG.port}`
+  );
+  if (CONFIG.isDevelopment) {
+    console.log(
+      `📡 Proxying frontend from Vite dev server on port ${CONFIG.vitePort}\n`
+    );
+  } else {
+    console.log(`📦 Serving built frontend from frontend/dist\n`);
+  }
 });
 
