@@ -304,15 +304,18 @@ if (CONFIG.isDevelopment) {
 // ============================================================================
 
 app.listen(CONFIG.port, CONFIG.host, () => {
+  console.log("\n" + "=".repeat(70));
   console.log(
-    `\n🚀 Text Intelligence Backend Server running at http://${CONFIG.host}:${CONFIG.port}`
+    `🚀 Text Intelligence Backend Server running at http://localhost:${CONFIG.port}`
   );
   if (CONFIG.isDevelopment) {
     console.log(
-      `📡 Proxying frontend from Vite dev server on port ${CONFIG.vitePort}\n`
+      `📡 Proxying frontend from Vite dev server on port ${CONFIG.vitePort}`
     );
+    console.log(`\n⚠️  Open your browser to http://localhost:${CONFIG.port}`);
   } else {
-    console.log(`📦 Serving built frontend from frontend/dist\n`);
+    console.log(`📦 Serving built frontend from frontend/dist`);
   }
+  console.log("=".repeat(70) + "\n");
 });
 

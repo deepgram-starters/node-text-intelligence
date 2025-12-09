@@ -5,17 +5,24 @@ Text intelligence demo using Deepgram's Read API with Node.js backend and web fr
 ## Prerequisites
 
 - [Deepgram API Key](https://console.deepgram.com/signup?jump=keys) (sign up for free)
-- Node.js 18+ and pnpm
+- Node.js 24+ and pnpm 10+
+
+**Note:** This project uses strict supply chain security measures. npm and yarn will NOT work - pnpm 10.0.0+ is required. See [SECURITY.md](SECURITY.md) for details.
 
 ## Quick Start
 
 1. **Install dependencies**
 
 ```bash
+# Option 1: Use the helper script (recommended)
+pnpm run install:all
+
+# Option 2: Manual two-step install
 pnpm install
+cd frontend && pnpm install && cd ..
 ```
 
-This automatically installs both backend and frontend dependencies.
+**Note:** Due to security settings (`ignore-scripts=true`), frontend dependencies must be installed separately. The `install:all` script handles both steps. See [SECURITY.md](SECURITY.md) for details.
 
 2. **Set your API key**
 
@@ -40,7 +47,9 @@ pnpm build
 pnpm start
 ```
 
-Open [http://localhost:3000](http://localhost:3000)
+### 🌐 Open the App
+
+[http://localhost:3000](http://localhost:3000)
 
 ## Features
 
