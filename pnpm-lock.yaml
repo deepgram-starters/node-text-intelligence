@@ -9,24 +9,24 @@ importers:
   .:
     dependencies:
       '@deepgram/sdk':
-        specifier: ^4.11.2
+        specifier: 4.11.2
         version: 4.11.2
       dotenv:
-        specifier: ^16.0.0
-        version: 16.6.1
+        specifier: 16.4.7
+        version: 16.4.7
       express:
-        specifier: ^4.18.0
+        specifier: 4.21.2
         version: 4.21.2
       http-proxy-middleware:
-        specifier: ^3.0.3
+        specifier: 3.0.5
         version: 3.0.5
       npm-run-all:
-        specifier: ^4.1.5
+        specifier: 4.1.5
         version: 4.1.5
     devDependencies:
       nodemon:
-        specifier: ^3.1.9
-        version: 3.1.11
+        specifier: 3.1.10
+        version: 3.1.10
 
 packages:
 
@@ -203,8 +203,8 @@ packages:
     resolution: {integrity: sha512-2sJGJTaXIIaR1w4iJSNoN0hnMY7Gpc/n8D4qSCJw8QqFWXf7cuAgnEHxBpweaVcPevC2l3KpjYCx3NypQQgaJg==}
     engines: {node: '>= 0.8', npm: 1.2.8000 || >= 1.4.16}
 
-  dotenv@16.6.1:
-    resolution: {integrity: sha512-uBq4egWHTcTt33a72vpSG0z3HnPuIl6NqYcTrKEg2azoEyl2hpW0zqlxysq2pK9HlDIHyHyakeYaYnSAwd8bow==}
+  dotenv@16.4.7:
+    resolution: {integrity: sha512-47qPchRCykZC03FhkYAhrvwU4xDBFIj1QPqaarj6mdM/hgUzfPHcpkHJOn3mJAufFeeAxAzeGsr5X0M4k6fLZQ==}
     engines: {node: '>=12'}
 
   dunder-proto@1.0.1:
@@ -591,8 +591,8 @@ packages:
       encoding:
         optional: true
 
-  nodemon@3.1.11:
-    resolution: {integrity: sha512-is96t8F/1//UHAjNPHpbsNY46ELPpftGUoSVNXwUfMk/qdjSylYrWSu1XavVTBOn526kFiOR733ATgNBCQyH0g==}
+  nodemon@3.1.10:
+    resolution: {integrity: sha512-WDjw3pJ0/0jMFmyNDp3gvY2YizjLmmOUQo6DEBY+JgdvW/yQ9mEeSw6H5ythl5Ny2ytb7f9C2nIbjSxMNzbJXw==}
     engines: {node: '>=10'}
     hasBin: true
 
@@ -1156,7 +1156,7 @@ snapshots:
 
   destroy@1.2.0: {}
 
-  dotenv@16.6.1: {}
+  dotenv@16.4.7: {}
 
   dunder-proto@1.0.1:
     dependencies:
@@ -1616,7 +1616,7 @@ snapshots:
     dependencies:
       whatwg-url: 5.0.0
 
-  nodemon@3.1.11:
+  nodemon@3.1.10:
     dependencies:
       chokidar: 3.6.0
       debug: 4.4.3(supports-color@5.5.0)

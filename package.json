@@ -4,27 +4,35 @@
   "description": "Text Intelligence starter app using Deepgram's Read API for summarization, topics, sentiment, and intent analysis",
   "type": "module",
   "main": "server.js",
+  "packageManager": "pnpm@10.0.0",
+  "engines": {
+    "node": ">=24.0.0",
+    "pnpm": ">=10.0.0"
+  },
   "scripts": {
-    "postinstall": "cd frontend && pnpm install",
+    "install:all": "pnpm install && cd frontend && pnpm install && cd ..",
+    "install:frontend": "cd frontend && pnpm install && cd ..",
     "build": "cd frontend && pnpm run build",
     "start": "node --no-deprecation server.js",
     "dev": "npm-run-all --parallel dev:backend dev:frontend",
     "dev:backend": "NODE_ENV=development nodemon --no-deprecation server.js",
-    "dev:frontend": "cd frontend && pnpm run dev -- --port 5173 --no-open --logLevel error"
+    "dev:frontend": "cd frontend && pnpm run dev -- --no-open --logLevel error",
+    "security-check": "snyk test --severity-threshold=low --package-manager=pnpm --fail-on=all",
+    "security-check:all": "pnpm run security-check && cd frontend && pnpm run security-check && cd .."
   },
   "repository": {
     "type": "git",
     "url": "https://github.com/deepgram-starters/node-text-intelligence.git"
   },
   "dependencies": {
-    "@deepgram/sdk": "^4.11.2",
-    "express": "^4.18.0",
-    "dotenv": "^16.0.0",
-    "http-proxy-middleware": "^3.0.3",
-    "npm-run-all": "^4.1.5"
+    "@deepgram/sdk": "4.11.2",
+    "express": "4.21.2",
+    "dotenv": "16.4.7",
+    "http-proxy-middleware": "3.0.5",
+    "npm-run-all": "4.1.5"
   },
   "devDependencies": {
-    "nodemon": "^3.1.9"
+    "nodemon": "3.1.10"
   },
   "browserslist": {
     "production": [
