@@ -51,22 +51,15 @@ pnpm start
 
 [http://localhost:3000](http://localhost:3000)
 
-## Features
+## How It Works
 
-- Analyze text or URLs for intelligence insights
-- Multiple analysis types:
+This application:
+1. Analyze text or URLs for intelligence insights for multiple analysis types:
   - **Summarization**: Generate concise summaries
   - **Topic Detection**: Identify key topics
   - **Sentiment Analysis**: Detect positive, negative, or neutral sentiment
   - **Intent Recognition**: Understand user intentions
-- View analysis history
-
-## How It Works
-
-- **Backend** (`server.js`): Node.js/Express server implementing the `/text-intelligence/analyze` endpoint
-- **Frontend** (`frontend/`): Vite-powered web UI for text analysis and results display
-- **API**: Integrates with [Deepgram's Text Intelligence API](https://developers.deepgram.com/)
-
+2. Returns analysis history
 
 ## Getting Help
 
