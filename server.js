@@ -14,7 +14,7 @@
  */
 
 import express from 'express';
-import { createClient } from '@deepgram/sdk';
+import { DeepgramClient } from '@deepgram/sdk';
 import { createProxyMiddleware } from 'http-proxy-middleware';
 import dotenv from 'dotenv';
 import path from 'path';
@@ -58,7 +58,7 @@ function loadApiKey() {
 const apiKey = loadApiKey();
 
 // Initialize Deepgram client
-const deepgram = createClient(apiKey);
+const deepgram = new DeepgramClient({ apiKey });
 
 // Initialize Express app
 const app = express();
@@ -117,11 +117,8 @@ app.post('/text-intelligence/analyze', async (req, res) => {
       });
     }
 
-    // Get the text content (either directly or from URL)
-    let textContent;
-
+    // Validate URL format if provided
     if (url) {
-      // Validate URL format
       try {
         new URL(url);
       } catch (e) {
@@ -134,37 +131,10 @@ app.post('/text-intelligence/analyze', async (req, res) => {
           }
         });
       }
-
-      // Fetch text from URL
-      try {
-        const response = await fetch(url);
-        if (!response.ok) {
-          return res.status(400).json({
-            error: {
-              type: "validation_error",
-              code: "INVALID_URL",
-              message: `Failed to fetch URL: ${response.statusText}`,
-              details: {}
-            }
-          });
-        }
-        textContent = await response.text();
-      } catch (e) {
-        return res.status(400).json({
-          error: {
-            type: "validation_error",
-            code: "INVALID_URL",
-            message: `Failed to fetch URL: ${e.message}`,
-            details: {}
-          }
-        });
-      }
-    } else {
-      textContent = text;
     }
 
-    // Check for empty text
-    if (!textContent || textContent.trim().length === 0) {
+    // Check for empty text if text is provided
+    if (text !== undefined && (!text || text.trim().length === 0)) {
       return res.status(400).json({
         error: {
           type: "validation_error",
@@ -215,26 +185,44 @@ app.post('/text-intelligence/analyze', async (req, res) => {
       options.intents = true;
     }
 
-    // Call Deepgram API (SDK v4 returns { result, error })
-    const { result, error } = await deepgram.read.analyzeText({ text: textContent }, options);
+    // Call Deepgram API (SDK v5 uses try/catch for errors)
+    try {
+      // v5 SDK expects text/url in a body object, options at top level
+      const analysisData = url
+        ? { body: { url }, ...options }
+        : { body: { text }, ...options };
 
-    // Handle SDK errors
-    if (error) {
-      console.error('Deepgram API Error:', error);
+      console.log('=== v5 API Request ===');
+      console.log('Request data:', JSON.stringify(analysisData, null, 2));
+
+      const result = await deepgram.read.v1.text.analyze(analysisData);
+
+      console.log('=== v5 API Response ===');
+      console.log('Has content:', {
+        summary: result.results?.summary?.text ? 'Yes' : 'No',
+        topics: result.results?.topics?.segments?.length > 0 ? 'Yes' : 'No',
+        sentiments: result.results?.sentiments?.segments?.length > 0 ? 'Yes' : 'No',
+        intents: result.results?.intents?.segments?.length > 0 ? 'Yes' : 'No'
+      });
+
+      // v5 returns data in result.results, just like v4!
+      const responseData = result.results || {};
+
+      // Return the response maintaining backward compatibility with v4 format
+      res.json({
+        results: responseData
+      });
+    } catch (deepgramError) {
+      console.error('Deepgram API Error:', deepgramError);
       return res.status(400).json({
         error: {
           type: "processing_error",
           code: "INVALID_TEXT",
-          message: error.message || 'Failed to process text',
+          message: deepgramError.message || 'Failed to process text',
           details: {}
         }
       });
     }
-
-    // Return full results object (includes all requested features)
-    res.json({
-      results: result.results || {}
-    });
 
   } catch (err) {
     console.error('Text Intelligence Error:', err);
