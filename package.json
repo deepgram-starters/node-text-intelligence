@@ -25,7 +25,7 @@
     "url": "https://github.com/deepgram-starters/node-text-intelligence.git"
   },
   "dependencies": {
-    "@deepgram/sdk": "4.11.2",
+    "@deepgram/sdk": "5.0.0-beta.2",
     "express": "4.21.2",
     "dotenv": "16.4.7",
     "http-proxy-middleware": "3.0.5",
