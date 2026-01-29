@@ -33,7 +33,7 @@ const __dirname = path.dirname(__filename);
 const CONFIG = {
   port: process.env.PORT || 8080,
   host: process.env.HOST || '0.0.0.0',
-  vitePort: process.env.VITE_PORT || 5173,
+  vitePort: process.env.VITE_PORT || 8081,
   isDevelopment: process.env.NODE_ENV === 'development',
 };
 
@@ -271,6 +271,17 @@ app.post('/text-intelligence/analyze', async (req, res) => {
 // Health check endpoint
 app.get('/health', (req, res) => {
   res.json({ status: 'ok', service: 'text-intelligence' });
+});
+
+// Metadata endpoint (required for standardization)
+app.get('/api/metadata', (req, res) => {
+  res.json({
+    name: "Node Text Intelligence Starter",
+    feature: "text-intelligence",
+    language: "JavaScript",
+    framework: "Node",
+    version: "1.0.0"
+  });
 });
 
 // ============================================================================
