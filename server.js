@@ -19,6 +19,8 @@ import { createProxyMiddleware } from 'http-proxy-middleware';
 import dotenv from 'dotenv';
 import path from 'path';
 import { fileURLToPath } from 'url';
+import fs from 'fs';
+import toml from 'toml';
 
 dotenv.config();
 
@@ -275,13 +277,26 @@ app.get('/health', (req, res) => {
 
 // Metadata endpoint (required for standardization)
 app.get('/api/metadata', (req, res) => {
-  res.json({
-    name: "Node Text Intelligence Starter",
-    feature: "text-intelligence",
-    language: "JavaScript",
-    framework: "Node",
-    version: "1.0.0"
-  });
+  try {
+    const tomlPath = path.join(__dirname, 'deepgram.toml');
+    const tomlContent = fs.readFileSync(tomlPath, 'utf-8');
+    const config = toml.parse(tomlContent);
+
+    if (!config.meta) {
+      return res.status(500).json({
+        error: 'INTERNAL_SERVER_ERROR',
+        message: 'Missing [meta] section in deepgram.toml'
+      });
+    }
+
+    res.json(config.meta);
+  } catch (error) {
+    console.error('Error reading metadata:', error);
+    res.status(500).json({
+      error: 'INTERNAL_SERVER_ERROR',
+      message: 'Failed to read metadata from deepgram.toml'
+    });
+  }
 });
 
 // ============================================================================
