@@ -13,20 +13,14 @@
  * - Serves static frontend in production
  */
 
-import express from 'express';
-import { createClient } from '@deepgram/sdk';
-import { createProxyMiddleware } from 'http-proxy-middleware';
-import dotenv from 'dotenv';
-import path from 'path';
-import { fileURLToPath } from 'url';
-import fs from 'fs';
-import toml from 'toml';
+require("dotenv").config();
 
-dotenv.config();
-
-// ES module equivalents for __dirname
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+const express = require("express");
+const { createClient } = require("@deepgram/sdk");
+const { createProxyMiddleware } = require("http-proxy-middleware");
+const path = require("path");
+const fs = require("fs");
+const toml = require("toml");
 
 // ============================================================================
 // CONFIGURATION
@@ -348,4 +342,3 @@ app.listen(CONFIG.port, CONFIG.host, () => {
   }
   console.log("=".repeat(70) + "\n");
 });
-
