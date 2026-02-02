@@ -1,6 +1,7 @@
 {
-  "name": "@deepgram/node-text-intelligence-starter",
+  "name": "@deepgram/node-text-intelligence",
   "version": "1.0.0",
+  "private": true,
   "description": "Text Intelligence starter app using Deepgram's Read API for summarization, topics, sentiment, and intent analysis",
   "main": "server.js",
   "packageManager": "pnpm@10.0.0",
@@ -9,26 +10,30 @@
     "pnpm": ">=10.0.0"
   },
   "scripts": {
-    "install:all": "pnpm install && cd frontend && pnpm install && cd ..",
-    "install:frontend": "cd frontend && pnpm install && cd ..",
-    "build": "cd frontend && pnpm run build",
     "start": "node --no-deprecation server.js",
-    "dev": "npm-run-all --parallel dev:backend dev:frontend",
-    "dev:backend": "NODE_ENV=development nodemon --no-deprecation server.js",
-    "dev:frontend": "cd frontend && pnpm run dev -- --no-open --logLevel error",
-    "security-check": "snyk test --severity-threshold=low --package-manager=pnpm --fail-on=all",
-    "security-check:all": "pnpm run security-check && cd frontend && pnpm run security-check && cd .."
+    "start-backend": "nodemon --no-deprecation server.js"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/deepgram-starters/node-text-intelligence.git"
+    "url": "git+https://github.com/deepgram-starters/node-text-intelligence.git"
   },
+  "keywords": [
+    "text-intelligence",
+    "deepgram",
+    "summarization",
+    "sentiment-analysis"
+  ],
+  "author": "Deepgram DX Team <devrel@deepgram.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/deepgram-starters/node-text-intelligence/issues"
+  },
+  "homepage": "https://github.com/deepgram-starters/node-text-intelligence#readme",
   "dependencies": {
     "@deepgram/sdk": "4.11.2",
-    "express": "5.2.1",
+    "cors": "2.8.5",
     "dotenv": "17.2.3",
-    "http-proxy-middleware": "3.0.5",
-    "npm-run-all": "4.1.5",
+    "express": "5.2.1",
     "toml": "3.0.0"
   },
   "devDependencies": {
