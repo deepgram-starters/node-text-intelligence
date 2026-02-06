@@ -78,7 +78,6 @@ app.use(cors({
  * Contract-compliant text intelligence endpoint per starter-contracts specification.
  * Accepts:
  * - Query parameters: summarize, topics, sentiment, intents, language (all optional)
- * - Header: X-Request-Id (optional, echoed back)
  * - Body: JSON with either text or url field (required, not both)
  *
  * Returns:
@@ -86,12 +85,6 @@ app.use(cors({
  * - Error (4XX): JSON error response matching contract format
  */
 app.post('/text-intelligence/analyze', async (req, res) => {
-  // Echo X-Request-Id header if provided
-  const requestId = req.headers['x-request-id'];
-  if (requestId) {
-    res.setHeader('X-Request-Id', requestId);
-  }
-
   try {
     // Extract text or url from JSON body
     const { text, url } = req.body;
@@ -240,12 +233,6 @@ app.post('/text-intelligence/analyze', async (req, res) => {
 
   } catch (err) {
     console.error('Text Intelligence Error:', err);
-
-    // Echo X-Request-Id even in errors
-    const requestId = req.headers['x-request-id'];
-    if (requestId) {
-      res.setHeader('X-Request-Id', requestId);
-    }
 
     // Determine appropriate error code
     let errorCode = "INVALID_TEXT";
