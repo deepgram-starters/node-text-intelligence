@@ -4,9 +4,10 @@ description = "Get started using Deepgram's Text Intelligence with this Node dem
 author = "Deepgram DX Team <devrel@deepgram.com> (https://developers.deepgram.com)"
 repository = "https://github.com/deepgram-starters/node-text-intelligence"
 useCase = "text-intelligence"
-language = "JavaScript"
-framework = "Node"
+language = "javascript"
+framework = "node"
 sdk = "N/A"
+tags = ["text-intelligence", "text-analysis", "nlp", "natural-language-processing", "javascript", "node"]
 
 [check]
 command = ["command -v git", "command -v node", "command -v pnpm"]
