@@ -5,7 +5,7 @@
  * powered by Deepgram's Text Intelligence service.
  *
  * Key Features:
- * - Contract-compliant API endpoint: POST /text-intelligence/analyze
+ * - Contract-compliant API endpoint: POST /api/text-intelligence
  * - Accepts text or URL in JSON body
  * - Supports multiple intelligence features: summarization, topics, sentiment, intents
  * - CORS-enabled for frontend communication
@@ -27,7 +27,6 @@ const toml = require("toml");
 const CONFIG = {
   port: process.env.PORT || 8081,
   host: process.env.HOST || '0.0.0.0',
-  frontendPort: process.env.FRONTEND_PORT || 8080,
 };
 
 // ============================================================================
@@ -59,21 +58,15 @@ const app = express();
 // Middleware for parsing JSON request bodies
 app.use(express.json());
 
-// Enable CORS for frontend
-app.use(cors({
-  origin: [
-    `http://localhost:${CONFIG.frontendPort}`,
-    `http://127.0.0.1:${CONFIG.frontendPort}`
-  ],
-  credentials: true
-}));
+// Enable CORS (wildcard is safe -- same-origin via Vite proxy / Caddy in production)
+app.use(cors());
 
 // ============================================================================
 // API ROUTES
 // ============================================================================
 
 /**
- * POST /text-intelligence/analyze
+ * POST /api/text-intelligence
  *
  * Contract-compliant text intelligence endpoint per starter-contracts specification.
  * Accepts:
@@ -84,7 +77,7 @@ app.use(cors({
  * - Success (200): JSON with results object containing requested intelligence features
  * - Error (4XX): JSON error response matching contract format
  */
-app.post('/text-intelligence/analyze', async (req, res) => {
+app.post('/api/text-intelligence', async (req, res) => {
   try {
     // Extract text or url from JSON body
     const { text, url } = req.body;
@@ -294,9 +287,9 @@ app.listen(CONFIG.port, CONFIG.host, () => {
   console.log('');
   console.log('======================================================================');
   console.log(`🚀 Backend API Server running at http://localhost:${CONFIG.port}`);
-  console.log(`📡 CORS enabled for http://localhost:${CONFIG.frontendPort}`);
   console.log('');
-  console.log(`💡 Frontend should be running on http://localhost:${CONFIG.frontendPort}`);
+  console.log(`📡 POST /api/text-intelligence`);
+  console.log(`📡 GET  /api/metadata`);
   console.log('======================================================================');
   console.log('');
 });
