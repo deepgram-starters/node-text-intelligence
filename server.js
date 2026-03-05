@@ -14,7 +14,7 @@
 
 require("dotenv").config();
 
-const { createClient } = require("@deepgram/sdk");
+const { DeepgramClient } = require("@deepgram/sdk");
 const cors = require("cors");
 const crypto = require("crypto");
 const express = require("express");
@@ -100,7 +100,7 @@ function loadApiKey() {
 const apiKey = loadApiKey();
 
 // Initialize Deepgram client
-const deepgram = createClient(apiKey);
+const deepgram = new DeepgramClient({ apiKey });
 
 // Initialize Express app
 const app = express();
@@ -269,21 +269,8 @@ app.post('/api/text-intelligence', requireSession, async (req, res) => {
       options.intents = true;
     }
 
-    // Call Deepgram API (SDK v4 returns { result, error })
-    const { result, error } = await deepgram.read.analyzeText({ text: textContent }, options);
-
-    // Handle SDK errors
-    if (error) {
-      console.error('Deepgram API Error:', error);
-      return res.status(400).json({
-        error: {
-          type: "processing_error",
-          code: "INVALID_TEXT",
-          message: error.message || 'Failed to process text',
-          details: {}
-        }
-      });
-    }
+    // Call Deepgram API (SDK v5 throws on error)
+    const result = await deepgram.read.v1.text.analyze({ ...options, body: { text: textContent } });
 
     // Return full results object (includes all requested features)
     res.json({
